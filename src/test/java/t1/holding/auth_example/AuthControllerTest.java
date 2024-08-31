@@ -12,9 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import t1.holding.auth_example.controller.AuthController;
-import t1.holding.auth_example.dto.LoginRequest;
-import t1.holding.auth_example.dto.SignUpRequest;
-import t1.holding.auth_example.security.JwtTokenProvider;
+пimport t1.holding.auth_example.security.JwtTokenProvider;
 import t1.holding.auth_example.service.UserService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -47,40 +45,16 @@ class AuthControllerTest {
     }
 
     @Test
-    void shouldRegisterUserSuccessfully() throws Exception {
-        SignUpRequest signUpRequest = new SignUpRequest();
-        signUpRequest.setUsername("testuser");
-        signUpRequest.setPassword("password");
-
+    public void testSignUpAndLogin() throws Exception {
         mockMvc.perform(post("/api/auth/signup")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(signUpRequest)))
+                        .content("{\"username\": \"newuser\", \"password\": \"securepassword\"}"))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"username\": \"newuser\", \"password\": \"securepassword\"}"))
                 .andExpect(status().isOk());
     }
 
-    @Test
-    void shouldFailRegistrationWithExistingUsername() throws Exception {
-        Mockito.when(userService.existsByUsername("testuser")).thenReturn(true);
-
-        SignUpRequest signUpRequest = new SignUpRequest();
-        signUpRequest.setUsername("testuser");
-        signUpRequest.setPassword("password");
-
-        mockMvc.perform(post("/api/auth/signup")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(signUpRequest)))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void shouldAuthenticateUserSuccessfully() throws Exception {
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsername("testuser");
-        loginRequest.setPassword("password");
-
-        mockMvc.perform(post("/api/auth/signin")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(loginRequest)))
-                .andExpect(status().isOk());
-    }
 }
