@@ -12,7 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import t1.holding.auth_example.controller.AuthController;
-пimport t1.holding.auth_example.security.JwtTokenProvider;
+import t1.holding.auth_example.security.JwtTokenProvider;
 import t1.holding.auth_example.service.UserService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
