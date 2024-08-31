@@ -63,7 +63,6 @@ URL: /api/auth/signup
 
 Тело запроса:
 ```json
-Копировать код
 {
   "username": "newuser",
   "password": "securepassword"
@@ -78,7 +77,6 @@ URL: /api/auth/login
 Тело запроса:
 
 ```json
-Копировать код
 {
   "username": "newuser",
   "password": "securepassword"
@@ -87,7 +85,6 @@ URL: /api/auth/login
 
 Ответ:
 ```json
-Копировать код
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
@@ -105,7 +102,6 @@ Authorization: Bearer <ваш JWT токен>
 Запуск тестов:
 
 ```bash
-Копировать код
 ./mvnw test
 ```
 
